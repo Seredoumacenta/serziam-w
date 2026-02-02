@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>serziam technologie ssh</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --dark-color: #1e293b;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fb;
+            padding-bottom: 60px;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 100;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover, 
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .admin-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+        }
+        
+        .admin-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.4);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(rgba(67, 97, 238, 0.05), rgba(63, 55, 201, 0.05)), url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f7fb"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23e9ecef" stroke-width="1"/></svg>');
+            background-size: cover;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--gray-color);
+        }
+        
+        .servers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .server-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .server-img {
+            height: 180px;
+            width: 100%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .server-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .server-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .server-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .server-features {
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .server-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .server-expiry {
+            background-color: #eef7ff;
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .server-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        
+        .pay-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .pay-btn.orange {
+            background: linear-gradient(135deg, #ff9e00, #e08c00);
+        }
+        
+        .pay-btn.mtn {
+            background: linear-gradient(135deg, #06d6a0, #05bc8f);
+        }
+        
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pay-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .copy-btn, .download-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 0.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .copy-btn:hover, .download-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .copy-btn:disabled, .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: #ffcdd2;
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .status-paid {
+            background-color: #ffcdd2;
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        
+        .status-expired {
+            background-color: #e0e0e0;
+            color: var(--gray-color);
+            border-color: #9e9e9e;
+            cursor: not-allowed;
+        }
+        
+        .admin-dashboard {
+            display: none;
+            margin-top: 2rem;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+        }
+        
+        .add-server-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .add-server-btn:hover {
+            background-color: #3ab0e0;
+            transform: translateY(-2px);
+        }
+        
+        .servers-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .servers-table th, 
+        .servers-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .servers-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .servers-table tr:hover {
+            background-color: #f8f9ff;
+        }
+        
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .edit-btn {
+            background-color: #4cc9f0;
+            color: white;
+        }
+        
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .validate-btn {
+            background-color: #4ade80;
+            color: white;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalOpen 0.4s ease-out;
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .file-input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            background-color: var(--light-color);
+            padding: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px dashed #ccc;
+        }
+        
+        .file-input-label:hover {
+            background-color: #e9ecef;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .cancel-btn {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .cancel-btn:hover {
+            background-color: #d9d9d9;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .announcement-bar {
+            background: linear-gradient(135deg, var(--dark-color), #0f172a);
+            color: white;
+            padding: 0.8rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .announcement-content {
+            white-space: nowrap;
+            animation: scrollLeft 30s linear infinite;
+            padding-left: 100%;
+        }
+        
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .toast.error {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .toast.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .toast i {
+            font-size: 1.2rem;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 0.2rem;
+            margin-top: 0.5rem;
+        }
+        
+        .star {
+            color: #ffc107;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .config-text {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .copy-config-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem;
+            }
+            
+            .servers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .announcement-content {
+                animation-duration: 20s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>serziam technologie ssh</h1>
+            <p>Serveurs SSH/VPN rapides et sécurisés pour une navigation privée</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">serziam</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Accueil</a></li>
+                <li><a href="#">Serveurs</a></li>
+                <li><a href="#">Tarifs</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <button class="admin-btn" id="adminLoginBtn">Espace Admin</button>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section class="hero">
+            <h2>Accédez à Internet en toute liberté et sécurité</h2>
+            <p>Nos serveurs SSH/VPN haute performance vous offrent une connexion sécurisée, anonyme et sans restriction géographique. Idéal pour le streaming, le gaming et la protection de votre vie privée.</p>
+        </section>
+        
+        <section id="serversSection">
+            <h2>Nos Serveurs Disponibles</h2>
+            <p style="margin: 1rem 0; color: var(--gray-color);">Chaque serveur doit être payé avant de pouvoir télécharger ou copier la configuration. Après paiement, vous avez 10 minutes pour accéder à votre configuration.</p>
+            <div class="servers-grid" id="serversGrid">
+                <!-- Servers will be dynamically inserted here -->
+            </div>
+        </section>
+        
+        <section class="admin-dashboard" id="adminDashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">Tableau de Bord Administrateur</h2>
+                <button class="add-server-btn" id="addServerBtn">Ajouter un Serveur</button>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <h3>Gestion des Annonces</h3>
+                <div class="form-group">
+                    <label for="announcementText">Nouvelle Annonce</label>
+                    <textarea id="announcementText" placeholder="Entrez le texte de l'annonce qui défilera en bas de page"></textarea>
+                </div>
+                <button class="submit-btn" id="addAnnouncementBtn" style="width: auto;">Publier l'Annonce</button>
+                <div style="margin-top: 1rem;">
+                    <h4>Annonces Actuelles</h4>
+                    <ul id="announcementsList" style="list-style-type: none; padding: 0; margin-top: 0.5rem;"></ul>
+                </div>
+            </div>
+            
+            <h3>Liste des Serveurs</h3>
+            <div style="overflow-x: auto;">
+                <table class="servers-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Prix (GNF)</th>
+                            <th>Durée (jours)</th>
+                            <th>Caractéristiques</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="serversTableBody">
+                        <!-- Servers will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <div class="announcement-bar">
+        <div class="announcement-content" id="announcementContent">
+            <!-- Announcements will be dynamically inserted here -->
+        </div>
+    </div>
+    
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Connexion Administrateur</h3>
+                <button class="close-modal" id="closeAdminLoginModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="adminLoginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="adminUsername">Nom d'utilisateur</label>
+                        <input type="text" id="adminUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Mot de passe</label>
+                        <input type="password" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn">Se Connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Server Modal -->
+    <div class="modal" id="addServerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ajouter un Serveur</h3>
+                <button class="close-modal" id="closeAddServerModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addServerForm">
+                    <div class="form-group">
+                        <label for="serverName">Nom du Serveur</label>
+                        <input type="text" id="serverName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serverPrice">Prix Initial (GNF)</label>
+                        <input type="number" id="serverPrice" min="1000" value="4000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serverDuration">Durée (jours)</label>
+                        <input type="number" id="serverDuration" min="1" max="30" value="4" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serverFeatures">Caractéristiques</label>
+                        <textarea id="serverFeatures" placeholder="Ex: Débit élevé, Streaming HD, Gaming optimisé, etc." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Image du Serveur</label>
+                        <div class="file-input-container">
+                            <label class="file-input-label">
+                                Choisir une image (PNG/JPG)
+                                <input type="file" class="file-input" id="serverImage" accept="image/png, image/jpeg">
+                            </label>
+                            <div id="imagePreview" style="text-align: center; margin-top: 0.5rem;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Type de Configuration</label>
+                        <select id="configType" required>
+                            <option value="text">Texte (à copier)</option>
+                            <option value="file">Fichier (.ovpn, .npvt, etc.)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="configTextInputGroup">
+                        <label for="configText">Contenu de la Configuration</label>
+                        <textarea id="configText" placeholder="Collez ici le contenu de votre fichier de configuration"></textarea>
+                    </div>
+                    <div class="form-group hidden" id="configFileInputGroup">
+                        <label for="configFile">Fichier de Configuration</label>
+                        <div class="file-input-container">
+                            <label class="file-input-label">
+                                Choisir un fichier
+                                <input type="file" class="file-input" id="configFile" accept=".ovpn,.npvt,.conf">
+                            </label>
+                            <div id="filePreview" style="margin-top: 0.5rem;"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="cancel-btn" id="cancelAddServer">Annuler</button>
+                        <button type="submit" class="submit-btn">Ajouter le Serveur</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Paiement du Serveur</h3>
+                <button class="close-modal" id="closePaymentModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="paymentInstructions">Cliquez sur le bouton de votre opérateur pour lancer le paiement. Après avoir effectué la transaction, collez le message de confirmation ci-dessous.</p>
+                <div style="display: flex; gap: 1rem; margin: 1.5rem 0;">
+                    <button class="pay-btn orange" id="orangePayBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#FF9E00"/>
+                            <path d="M12 7V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Orange Money
+                    </button>
+                    <button class="pay-btn mtn" id="mtnPayBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" fill="#06D6A0"/>
+                            <path d="M16 12L12 8L8 12L12 16L16 12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        MTN Mobile Money
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="transactionMessage">Message de Transaction</label>
+                    <textarea id="transactionMessage" placeholder="Collez ici le message de confirmation de votre transaction Orange Money ou MTN Mobile Money" required></textarea>
+                    <small style="display: block; margin-top: 0.5rem; color: var(--gray-color);">
+                        Exemple: Bonjour,Envoi de: la somme de 4000.00GNF vers le 622001839, reference:PP260130.2102.C58818. Orange Money vous remercie
+                    </small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" id="cancelPayment">Annuler</button>
+                    <button type="button" class="submit-btn" id="validatePayment">Valider le Paiement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Config View Modal -->
+    <div class="modal" id="configModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Configuration du Serveur</h3>
+                <button class="close-modal" id="closeConfigModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="configContent">
+                    <!-- Configuration content will be inserted here -->
+                </div>
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.8rem;">
+                    <button class="copy-btn" id="copyConfigBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="8" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 16H2V4H14V2H4V16Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Copier
+                    </button>
+                    <button class="download-btn" id="downloadConfigBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 8L12 13L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 2V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Télécharger
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+    
+    <script>
+        // Constants for USSD codes (hidden from direct display)
+        const ORANGE_USSD_BASE = '*144*1*1*622001839';
+        const MTN_USSD_BASE = '*440*1*1*663199359';
+        
+        // DOM Elements
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const closeAdminLoginModal = document.getElementById('closeAdminLoginModal');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const addServerBtn = document.getElementById('addServerBtn');
+        const addServerModal = document.getElementById('addServerModal');
+        const closeAddServerModal = document.getElementById('closeAddServerModal');
+        const addServerForm = document.getElementById('addServerForm');
+        const serversGrid = document.getElementById('serversGrid');
+        const serversTableBody = document.getElementById('serversTableBody');
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const orangePayBtn = document.getElementById('orangePayBtn');
+        const mtnPayBtn = document.getElementById('mtnPayBtn');
+        const validatePaymentBtn = document.getElementById('validatePaymentBtn');
+        const transactionMessageInput = document.getElementById('transactionMessage');
+        const configModal = document.getElementById('configModal');
+        const closeConfigModal = document.getElementById('closeConfigModal');
+        const configContent = document.getElementById('configContent');
+        const copyConfigBtn = document.getElementById('copyConfigBtn');
+        const downloadConfigBtn = document.getElementById('downloadConfigBtn');
+        const configTextInputGroup = document.getElementById('configTextInputGroup');
+        const configFileInputGroup = document.getElementById('configFileInputGroup');
+        const configTypeSelect = document.getElementById('configType');
+        const announcementText = document.getElementById('announcementText');
+        const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
+        const announcementsList = document.getElementById('announcementsList');
+        const announcementContent = document.getElementById('announcementContent');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        // State variables
+        let isAdminLoggedIn = false;
+        let currentServerId = null;
+        let servers = JSON.parse(localStorage.getItem('serziamServers')) || [];
+        let announcements = JSON.parse(localStorage.getItem('serziamAnnouncements')) || [];
+        let pendingPayments = JSON.parse(localStorage.getItem('serziamPendingPayments')) || {};
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Render initial state
+            renderServers();
+            renderAdminDashboard();
+            renderAnnouncements();
+            
+            // Start background tasks
+            startBackgroundTasks();
+        });
+        
+        function setupEventListeners() {
+            // Admin login
+            adminLoginBtn.addEventListener('click', () => {
+                adminLoginModal.style.display = 'flex';
+            });
+            
+            closeAdminLoginModal.addEventListener('click', () => {
+                adminLoginModal.style.display = 'none';
+            });
+            
+            adminLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('adminUsername').value;
+                const password = document.getElementById('adminPassword').value;
+                
+                // Hardcoded admin credentials
+                if (username === 'yayacamara' && password === 'yayacamara1995') {
+                    isAdminLoggedIn = true;
+                    showToast('Connexion réussie ! Bienvenue dans le tableau de bord administrateur.', 'success');
+                    adminLoginModal.style.display = 'none';
+                    adminLoginForm.reset();
+                    document.getElementById('adminUsername').blur();
+                    document.getElementById('adminPassword').blur();
+                    showAdminDashboard();
+                } else {
+                    showToast('Identifiant ou mot de passe incorrect.', 'error');
+                }
+            });
+            
+            // Add server
+            addServerBtn.addEventListener('click', () => {
+                addServerModal.style.display = 'flex';
+                document.getElementById('addServerForm').reset();
+                document.getElementById('imagePreview').innerHTML = '';
+                document.getElementById('filePreview').innerHTML = '';
+            });
+            
+            closeAddServerModal.addEventListener('click', () => {
+                addServerModal.style.display = 'none';
+            });
+            
+            document.getElementById('cancelAddServer').addEventListener('click', () => {
+                addServerModal.style.display = 'none';
+            });
+            
+            configTypeSelect.addEventListener('change', () => {
+                if (configTypeSelect.value === 'text') {
+                    configTextInputGroup.classList.remove('hidden');
+                    configFileInputGroup.classList.add('hidden');
+                } else {
+                    configTextInputGroup.classList.add('hidden');
+                    configFileInputGroup.classList.remove('hidden');
+                }
+            });
+            
+            // Image preview
+            document.getElementById('serverImage').addEventListener('change', (e) => {
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = '';
+                
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.style.maxWidth = '100%';
+                        img.style.maxHeight = '150px';
+                        img.style.borderRadius = '4px';
+                        imagePreview.appendChild(img);
+                    }
+                    
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // File preview
+            document.getElementById('configFile').addEventListener('change', (e) => {
+                const filePreview = document.getElementById('filePreview');
+                filePreview.innerHTML = '';
+                
+                if (e.target.files && e.target.files[0]) {
+                    const fileName = e.target.files[0].name;
+                    filePreview.textContent = `Fichier sélectionné: ${fileName}`;
+                }
+            });
+            
+            // Add server form submission
+            addServerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const serverName = document.getElementById('serverName').value;
+                const serverPrice = parseInt(document.getElementById('serverPrice').value);
+                const serverDuration = parseInt(document.getElementById('serverDuration').value);
+                const serverFeatures = document.getElementById('serverFeatures').value;
+                const serverImageInput = document.getElementById('serverImage');
+                const configType = document.getElementById('configType').value;
+                let configData = '';
+                
+                if (configType === 'text') {
+                    configData = document.getElementById('configText').value;
+                    if (!configData.trim()) {
+                        showToast('Le contenu de la configuration est requis.', 'error');
+                        return;
+                    }
+                } else {
+                    const configFileInput = document.getElementById('configFile');
+                    if (!configFileInput.files || !configFileInput.files[0]) {
+                        showToast('Veuillez sélectionner un fichier de configuration.', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        configData = event.target.result;
+                        saveServer();
+                    };
+                    reader.readAsDataURL(configFileInput.files[0]);
+                    return; // Wait for file reading to complete
+                }
+                
+                saveServer();
+                
+                function saveServer() {
+                    // Handle image
+                    let imageUrl = '';
+                    if (serverImageInput.files && serverImageInput.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            imageUrl = event.target.result;
+                            createServer();
+                        };
+                        reader.readAsDataURL(serverImageInput.files[0]);
+                    } else {
+                        // Default server image
+                        imageUrl = 'image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180" viewBox="0 0 300 180"><rect width="300" height="180" fill="%23e9ecef"/><text x="50%" y="50%" font-family="Arial" font-size="16" fill="%236c757d" text-anchor="middle" dominant-baseline="middle">Image du Serveur</text></svg>';
+                        createServer();
+                    }
+                    
+                    function createServer() {
+                        const newServer = {
+                            id: Date.now().toString(),
+                            name: serverName,
+                            price: serverPrice,
+                            duration: serverDuration,
+                            features: serverFeatures,
+                            imageUrl: imageUrl,
+                            configType: configType,
+                            configData: configData,
+                            fileName: configType === 'file' ? document.getElementById('configFile').files[0].name : 'configuration.txt',
+                            postedDate: new Date().getTime(),
+                            isPaid: false,
+                            paidAt: null,
+                            expiryDate: new Date().getTime() + (serverDuration * 24 * 60 * 60 * 1000)
+                        };
+                        
+                        servers.push(newServer);
+                        saveServersToLocalStorage();
+                        renderServers();
+                        renderAdminDashboard();
+                        addServerModal.style.display = 'none';
+                        showToast('Serveur ajouté avec succès !', 'success');
+                    }
+                }
+            });
+            
+            // Payment buttons
+            orangePayBtn.addEventListener('click', () => initiatePayment('orange'));
+            mtnPayBtn.addEventListener('click', () => initiatePayment('mtn'));
+            
+            document.getElementById('cancelPayment').addEventListener('click', () => {
+                paymentModal.style.display = 'none';
+            });
+            
+            closePaymentModal.addEventListener('click', () => {
+                paymentModal.style.display = 'none';
+            });
+            
+            validatePaymentBtn.addEventListener('click', validatePayment);
+            
+            // Config modal buttons
+            closeConfigModal.addEventListener('click', () => {
+                configModal.style.display = 'none';
+            });
+            
+            copyConfigBtn.addEventListener('click', copyConfiguration);
+            downloadConfigBtn.addEventListener('click', downloadConfiguration);
+            
+            // Announcement management
+            addAnnouncementBtn.addEventListener('click', () => {
+                const text = announcementText.value.trim();
+                if (text) {
+                    const newAnnouncement = {
+                        id: Date.now().toString(),
+                        text: text,
+                        date: new Date().toISOString()
+                    };
+                    
+                    announcements.push(newAnnouncement);
+                    saveAnnouncementsToLocalStorage();
+                    renderAnnouncements();
+                    announcementText.value = '';
+                    showToast('Annonce publiée avec succès !', 'success');
+                } else {
+                    showToast('Veuillez entrer le texte de l\'annonce.', 'warning');
+                }
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === adminLoginModal) adminLoginModal.style.display = 'none';
+                if (e.target === addServerModal) addServerModal.style.display = 'none';
+                if (e.target === paymentModal) paymentModal.style.display = 'none';
+                if (e.target === configModal) configModal.style.display = 'none';
+            });
+        }
+        
+        function showAdminDashboard() {
+            adminDashboard.style.display = 'block';
+            document.querySelector('#serversSection').style.display = 'none';
+            adminLoginBtn.style.display = 'none';
+            
+            // Add logout button
+            const logoutBtn = document.createElement('button');
+            logoutBtn.textContent = 'Déconnexion';
+            logoutBtn.className = 'admin-btn';
+            logoutBtn.style.marginLeft = '1rem';
+            logoutBtn.addEventListener('click', () => {
+                isAdminLoggedIn = false;
+                adminDashboard.style.display = 'none';
+                document.querySelector('#serversSection').style.display = 'block';
+                adminLoginBtn.style.display = 'block';
+                logoutBtn.remove();
+                showToast('Déconnexion réussie.', 'success');
+            });
+            
+            document.querySelector('.nav-container').appendChild(logoutBtn);
+        }
+        
+        function renderServers() {
+            serversGrid.innerHTML = '';
+            
+            if (servers.length === 0) {
+                serversGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--gray-color);">Aucun serveur disponible pour le moment. Revenez plus tard !</p>';
+                return;
+            }
+            
+            // Sort servers: available first, then paid (for current session), then expired
+            const now = new Date().getTime();
+            const sortedServers = [...servers].sort((a, b) => {
+                // Paid servers that are still within the 10-minute window come first
+                const aIsPaidAndValid = a.isPaid && (now - a.paidAt) < (10 * 60 * 1000);
+                const bIsPaidAndValid = b.isPaid && (now - b.paidAt) < (10 * 60 * 1000);
+                
+                if (aIsPaidAndValid && !bIsPaidAndValid) return -1;
+                if (!aIsPaidAndValid && bIsPaidAndValid) return 1;
+                
+                // Then available servers
+                const aIsAvailable = !a.isPaid && now < a.expiryDate;
+                const bIsAvailable = !b.isPaid && now < b.expiryDate;
+                
+                if (aIsAvailable && !bIsAvailable) return -1;
+                if (!aIsAvailable && bIsAvailable) return 1;
+                
+                // Then by posted date (newest first)
+                return b.postedDate - a.postedDate;
+            });
+            
+            sortedServers.forEach(server => {
+                const now = new Date().getTime();
+                const isExpired = now > server.expiryDate;
+                const isPaidAndValid = server.isPaid && (now - server.paidAt) < (10 * 60 * 1000);
+                const isPaidAndExpired = server.isPaid && (now - server.paidAt) >= (10 * 60 * 1000);
+                const daysSincePosted = Math.floor((now - server.postedDate) / (24 * 60 * 60 * 1000));
+                const currentPrice = Math.max(server.price - (daysSincePosted * 1000), 0);
+                
+                // Skip servers that are paid and expired (beyond 10 minutes)
+                if (isPaidAndExpired) return;
+                
+                // Skip servers that are expired and not paid
+                if (isExpired && !server.isPaid) return;
+                
+                const serverCard = document.createElement('div');
+                serverCard.className = 'server-card';
+                serverCard.innerHTML = `
+                    <div class="server-img">
+                        ${server.imageUrl ? `<img src="${server.imageUrl}" alt="${server.name}">` : '<div style="font-size:1.2rem;color:#6c757d">Pas d\'image</div>'}
+                    </div>
+                    <div class="server-content">
+                        <h3 class="server-title">${server.name}</h3>
+                        <div class="server-features">${server.features || 'Aucune caractéristique spécifiée'}</div>
+                        <div class="server-price">${currentPrice.toLocaleString()} GNF</div>
+                        <div class="server-expiry">
+                            ${isPaidAndValid ? 
+                                `Valide jusqu'à ${new Date(server.paidAt + 10 * 60 * 1000).toLocaleTimeString()}` :
+                                `${Math.max(0, Math.ceil((server.expiryDate - now) / (24 * 60 * 60 * 1000)))} jours restants`}
+                        </div>
+                        <div class="server-actions">
+                            ${isPaidAndValid ? 
+                                renderPaidActions(server) : 
+                                renderAvailableActions(server, currentPrice, isExpired)}
+                        </div>
+                        <div class="rating">
+                            <span class="star" title="5 étoiles">★</span>
+                            <span class="star" title="4 étoiles">★</span>
+                            <span class="star" title="3 étoiles">★</span>
+                            <span class="star" title="2 étoiles">★</span>
+                            <span class="star" title="1 étoile">★</span>
+                        </div>
+                    </div>
+                `;
+                serversGrid.appendChild(serverCard);
+            });
+            
+            // Add event listeners to action buttons
+            document.querySelectorAll('.pay-btn-server').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentServerId = e.target.dataset.serverId;
+                    paymentModal.style.display = 'flex';
+                });
+            });
+            
+            document.querySelectorAll('.view-config-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    currentServerId = e.target.dataset.serverId;
+                    showConfiguration();
+                });
+            });
+        }
+        
+        function renderPaidActions(server) {
+            return `
+                <button class="copy-btn view-config-btn" data-server-id="${server.id}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="8" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 16H2V4H14V2H4V16Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Voir Configuration
+                </button>
+                <button class="copy-btn status-paid" disabled>Déjà Payé</button>
+            `;
+        }
+        
+        function renderAvailableActions(server, currentPrice, isExpired) {
+            if (isExpired) {
+                return `<button class="copy-btn status-expired" disabled>Expiré</button>`;
+            }
+            
+            return `
+                <button class="pay-btn orange pay-btn-server" data-server-id="${server.id}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#FF9E00"/>
+                        <path d="M12 7V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Payer ${currentPrice} GNF
+                </button>
+                <button class="pay-btn mtn pay-btn-server" data-server-id="${server.id}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" fill="#06D6A0"/>
+                        <path d="M16 12L12 8L8 12L12 16L16 12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Payer ${currentPrice} GNF
+                </button>
+            `;
+        }
+        
+        function renderAdminDashboard() {
+            if (!isAdminLoggedIn) return;
+            
+            serversTableBody.innerHTML = '';
+            
+            if (servers.length === 0) {
+                serversTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--gray-color);">
+                            Aucun serveur dans la base de données. Ajoutez votre premier serveur !
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Filter out paid servers that are beyond the 10-minute window
+            const now = new Date().getTime();
+            const adminServers = servers.filter(server => {
+                if (server.isPaid) {
+                    return (now - server.paidAt) < (10 * 60 * 1000);
+                }
+                return true;
+            });
+            
+            adminServers.forEach(server => {
+                const daysSincePosted = Math.floor((now - server.postedDate) / (24 * 60 * 60 * 1000));
+                const currentPrice = Math.max(server.price - (daysSincePosted * 1000), 0);
+                const isExpired = now > server.expiryDate;
+                const status = server.isPaid ? 'Payé' : (isExpired ? 'Expiré' : `Disponible (${currentPrice} GNF)`);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        ${server.imageUrl ? 
+                            `<img src="${server.imageUrl}" alt="${server.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">` : 
+                            '<div style="width:50px;height:50px;background-color:#e9ecef;display:flex;align-items:center;justify-content:center;font-size:0.8rem">?</div>'}
+                    </td>
+                    <td>${server.name}</td>
+                    <td>${server.price.toLocaleString()} GNF</td>
+                    <td>${server.duration} jours</td>
+                    <td>${server.features.substring(0, 50)}${server.features.length > 50 ? '...' : ''}</td>
+                    <td>${status}</td>
+                    <td>
+                        <button class="action-btn edit-btn" data-id="${server.id}">Modifier</button>
+                        <button class="action-btn delete-btn" data-id="${server.id}">Supprimer</button>
+                        ${server.isPaid ? '' : `<button class="action-btn validate-btn" data-id="${server.id}">Valider Paiement</button>`}
+                    </td>
+                `;
+                serversTableBody.appendChild(row);
+            });
+            
+            // Add event listeners for admin actions
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const serverId = e.target.dataset.id;
+                    deleteServer(serverId);
+                });
+            });
+            
+            document.querySelectorAll('.validate-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const serverId = e.target.dataset.id;
+                    currentServerId = serverId;
+                    // In a real app, this would open a modal to validate payment details
+                    // For this demo, we'll simulate validation
+                    simulatePaymentValidation(serverId);
+                });
+            });
+            
+            // Render announcements list
+            announcementsList.innerHTML = '';
+            announcements.slice().reverse().forEach(announcement => {
+                const li = document.createElement('li');
+                li.style.padding = '0.5rem 0';
+                li.style.borderBottom = '1px solid #e9ecef';
+                li.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>${announcement.text}</span>
+                        <button class="action-btn delete-btn" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;" data-id="${announcement.id}">Supprimer</button>
+                    </div>
+                `;
+                announcementsList.appendChild(li);
+            });
+            
+            // Add event listeners for announcement deletion
+            document.querySelectorAll('#announcementsList .delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.dataset.id;
+                    announcements = announcements.filter(a => a.id !== id);
+                    saveAnnouncementsToLocalStorage();
+                    renderAnnouncements();
+                    showToast('Annonce supprimée.', 'success');
+                });
+            });
+        }
+        
+        function renderAnnouncements() {
+            // Combine all announcements into a single scrolling string
+            if (announcements.length === 0) {
+                announcementContent.textContent = 'Aucune annonce pour le moment. Revenez plus tard !';
+                return;
+            }
+            
+            const announcementTexts = announcements.map(a => `📢 ${a.text} •`).join(' ');
+            announcementContent.textContent = announcementTexts.repeat(3); // Repeat to ensure smooth scrolling
+        }
+        
+        function initiatePayment(provider) {
+            if (!currentServerId) return;
+            
+            const server = servers.find(s => s.id === currentServerId);
+            if (!server) return;
+            
+            const now = new Date().getTime();
+            const daysSincePosted = Math.floor((now - server.postedDate) / (24 * 60 * 60 * 1000));
+            const currentPrice = Math.max(server.price - (daysSincePosted * 1000), 0);
+            
+            let ussdCode = '';
+            if (provider === 'orange') {
+                ussdCode = `${ORANGE_USSD_BASE}*${currentPrice}*1#`;
+            } else {
+                ussdCode = `${MTN_USSD_BASE}*${currentPrice}*1#`;
+            }
+            
+            // Create a temporary link to trigger the dialer
+            const tempLink = document.createElement('a');
+            tempLink.href = `tel:${ussdCode}`;
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            
+            // Trigger the click and show confirmation
+            tempLink.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(tempLink);
+            }, 100);
+            
+            showToast(`Dialer ouvert. Veuillez confirmer l'envoi sur votre téléphone.`, 'success');
+        }
+        
+        function validatePayment() {
+            const message = transactionMessageInput.value.trim();
+            if (!message) {
+                showToast('Veuillez coller le message de transaction.', 'warning');
+                return;
+            }
+            
+            if (!currentServerId) {
+                showToast('Erreur: Serveur non sélectionné.', 'error');
+                return;
+            }
+            
+            const server = servers.find(s => s.id === currentServerId);
+            if (!server) {
+                showToast('Erreur: Serveur introuvable.', 'error');
+                return;
+            }
+            
+            // Extract amount and recipient from message
+            const amountMatch = message.match(/(\d+\.?\d*)\s*GNF/i);
+            const recipientMatchOrange = message.match(/vers le 622001839/i);
+            const recipientMatchMTN = message.match(/vers le 663199359/i);
+            
+            if (!amountMatch) {
+                showToast('Message invalide: Montant non trouvé.', 'error');
+                return;
+            }
+            
+            const amount = parseFloat(amountMatch[1]);
+            const now = new Date().getTime();
+            const daysSincePosted = Math.floor((now - server.postedDate) / (24 * 60 * 60 * 1000));
+            const currentPrice = Math.max(server.price - (daysSincePosted * 1000), 0);
+            
+            // Check recipient and amount
+            if ((!recipientMatchOrange && !recipientMatchMTN) || amount < currentPrice) {
+                showToast(`Paiement invalide. Vérifiez le montant et le destinataire. Montant requis: ${currentPrice} GNF`, 'error');
+                return;
+            }
+            
+            // Store pending payment for admin validation
+            pendingPayments[currentServerId] = {
+                message: message,
+                timestamp: now,
+                amount: amount,
+                recipient: recipientMatchOrange ? 'orange' : (recipientMatchMTN ? 'mtn' : 'unknown')
+            };
+            
+            localStorage.setItem('serziamPendingPayments', JSON.stringify(pendingPayments));
+            
+            // In a real app, we'd wait for admin validation
+            // For this demo, we'll simulate immediate validation after a delay
+            showToast('Paiement soumis avec succès. En attente de validation...', 'success');
+            paymentModal.style.display = 'none';
+            
+            // Simulate admin validation after 2 seconds for demo purposes
+            setTimeout(() => {
+                simulatePaymentValidation(currentServerId);
+            }, 2000);
+        }
+        
+        function simulatePaymentValidation(serverId) {
+            const serverIndex = servers.findIndex(s => s.id === serverId);
+            if (serverIndex === -1) return;
+            
+            // Update server status
+            servers[serverIndex].isPaid = true;
+            servers[serverIndex].paidAt = new Date().getTime();
+            
+            // Remove from pending payments
+            delete pendingPayments[serverId];
+            
+            saveServersToLocalStorage();
+            localStorage.setItem('serziamPendingPayments', JSON.stringify(pendingPayments));
+            
+            // Update UI
+            renderServers();
+            renderAdminDashboard();
+            
+            showToast('Paiement validé ! Vous pouvez maintenant accéder à la configuration.', 'success');
+            
+            // Auto-open config modal for the user
+            currentServerId = serverId;
+            setTimeout(showConfiguration, 500);
+        }
+        
+        function showConfiguration() {
+            const server = servers.find(s => s.id === currentServerId);
+            if (!server || !server.isPaid) {
+                showToast('Accès non autorisé à la configuration.', 'error');
+                return;
+            }
+            
+            const now = new Date().getTime();
+            if ((now - server.paidAt) >= (10 * 60 * 1000)) {
+                showToast('Le temps d\'accès à la configuration a expiré.', 'error');
+                renderServers(); // Refresh to update UI
+                return;
+            }
+            
+            configContent.innerHTML = '';
+            
+            if (server.configType === 'text') {
+                configContent.innerHTML = `
+                    <h3>Configuration pour ${server.name}</h3>
+                    <div class="config-text">
+                        ${server.configData.replace(/\n/g, '<br>')}
+                        <button class="copy-config-btn" id="copyInlineConfig">Copier</button>
+                    </div>
+                `;
+                
+                document.getElementById('copyInlineConfig').addEventListener('click', () => {
+                    navigator.clipboard.writeText(server.configData).then(() => {
+                        showToast('Configuration copiée dans le presse-papiers !', 'success');
+                    }).catch(err => {
+                        console.error('Erreur lors de la copie: ', err);
+                        showToast('Erreur lors de la copie.', 'error');
+                    });
+                });
+            } else {
+                configContent.innerHTML = `
+                    <h3>Configuration pour ${server.name}</h3>
+                    <p style="margin: 1rem 0;">Fichier: <strong>${server.fileName}</strong></p>
+                    <p style="margin: 1rem 0; color: var(--gray-color);">
+                        Cliquez sur le bouton "Télécharger" ci-dessous pour obtenir votre fichier de configuration.
+                    </p>
+                `;
+            }
+            
+            configModal.style.display = 'flex';
+        }
+        
+        function copyConfiguration() {
+            const server = servers.find(s => s.id === currentServerId);
+            if (!server) return;
+            
+            if (server.configType === 'text') {
+                navigator.clipboard.writeText(server.configData).then(() => {
+                    showToast('Configuration copiée dans le presse-papiers !', 'success');
+                }).catch(err => {
+                    console.error('Erreur lors de la copie: ', err);
+                    showToast('Erreur lors de la copie.', 'error');
+                });
+            } else {
+                showToast('Cette configuration est un fichier. Utilisez le bouton "Télécharger".', 'warning');
+            }
+        }
+        
+        function downloadConfiguration() {
+            const server = servers.find(s => s.id === currentServerId);
+            if (!server) return;
+            
+            if (server.configType === 'file') {
+                // Create a download link for the base64 file
+                const link = document.createElement('a');
+                link.href = server.configData;
+                link.download = server.fileName || 'configuration.ovpn';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showToast('Fichier téléchargé avec succès !', 'success');
+            } else {
+                // For text config, create a blob and download
+                const blob = new Blob([server.configData], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = server.fileName || 'configuration.txt';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                
+                showToast('Fichier téléchargé avec succès !', 'success');
+            }
+        }
+        
+        function deleteServer(serverId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce serveur ? Cette action est irréversible.')) {
+                servers = servers.filter(server => server.id !== serverId);
+                saveServersToLocalStorage();
+                renderServers();
+                renderAdminDashboard();
+                showToast('Serveur supprimé avec succès.', 'success');
+            }
+        }
+        
+        function saveServersToLocalStorage() {
+            localStorage.setItem('serziamServers', JSON.stringify(servers));
+        }
+        
+        function saveAnnouncementsToLocalStorage() {
+            localStorage.setItem('serziamAnnouncements', JSON.stringify(announcements));
+        }
+        
+        function showToast(message, type = 'info') {
+            toastMessage.textContent = message;
+            toast.className = 'toast';
+            toast.classList.add(type);
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function startBackgroundTasks() {
+            // Update server statuses every minute
+            setInterval(() => {
+                const now = new Date().getTime();
+                let shouldUpdate = false;
+                
+                // Process servers
+                servers.forEach(server => {
+                    // Skip already paid servers that are beyond the 10-minute window
+                    if (server.isPaid && (now - server.paidAt) >= (10 * 60 * 1000)) {
+                        return;
+                    }
+                    
+                    // Check if server has expired
+                    if (!server.isPaid && now > server.expiryDate) {
+                        shouldUpdate = true;
+                    }
+                    
+                    // Auto-remove paid servers after 10 minutes
+                    if (server.isPaid && (now - server.paidAt) >= (10 * 60 * 1000)) {
+                        shouldUpdate = true;
+                    }
+                });
+                
+                // Clean up expired servers and paid servers beyond 10 minutes
+                servers = servers.filter(server => {
+                    if (server.isPaid) {
+                        return (now - server.paidAt) < (10 * 60 * 1000);
+                    }
+                    return now < server.expiryDate;
+                });
+                
+                if (shouldUpdate) {
+                    saveServersToLocalStorage();
+                    if (document.querySelector('#serversSection').style.display !== 'none') {
+                        renderServers();
+                    }
+                    if (isAdminLoggedIn) {
+                        renderAdminDashboard();
+                    }
+                }
+            }, 60000); // Every minute
+        }
+    </script>
+</body>
+</html>
+
